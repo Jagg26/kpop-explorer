@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#101820"/>
+  <path d="M120 140h660v620H120z" fill="#3ddcff" opacity=".15"/>
+  <path d="M180 210h540v450H180z" fill="#ff4fa3" opacity=".55"/>
+  <path d="M450 150l50 101 111 16-80 78 19 110-100-52-100 52 19-110-80-78 111-16z" fill="#ffffff"/>
+  <text x="450" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="142" font-weight="800" fill="#ffffff">ITZY</text>
+  <text x="450" y="725" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#d7efff">K-POP EXPLORER</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#161622"/>
+  <path d="M0 215h900v210H0z" fill="#8b5cf6" opacity=".55"/>
+  <path d="M0 480h900v165H0z" fill="#3ddcff" opacity=".5"/>
+  <path d="M450 150l54 109 120 17-87 85 21 120-108-57-108 57 21-120-87-85 120-17z" fill="#ffffff"/>
+  <text x="450" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="88" font-weight="800" fill="#ffffff">Stray Kids</text>
+  <text x="450" y="725" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#d7efff">K-POP EXPLORER</text>
+</svg>

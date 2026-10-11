@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#101820"/>
+  <circle cx="230" cy="230" r="140" fill="#3ddcff" opacity=".9"/>
+  <circle cx="670" cy="260" r="110" fill="#5eead4" opacity=".9"/>
+  <circle cx="450" cy="560" r="210" fill="#ffffff" opacity=".12"/>
+  <path d="M450 160l48 97 107 16-77 75 18 106-96-51-96 51 18-106-77-75 107-16z" fill="#ff4fa3"/>
+  <text x="450" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="92" font-weight="800" fill="#ffffff">NewJeans</text>
+  <text x="450" y="727" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#b8b8c8">K-POP EXPLORER</text>
+</svg>

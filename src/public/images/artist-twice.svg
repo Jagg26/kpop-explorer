@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#171721"/>
+  <circle cx="720" cy="160" r="130" fill="#3ddcff" opacity=".88"/>
+  <circle cx="180" cy="720" r="170" fill="#ff4fa3" opacity=".9"/>
+  <path d="M450 150l56 114 126 18-91 89 22 126-113-59-113 59 22-126-91-89 126-18z" fill="#ffffff"/>
+  <text x="450" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="132" font-weight="800" fill="#ffffff">TWICE</text>
+  <text x="450" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#b8b8c8">K-POP EXPLORER</text>
+</svg>

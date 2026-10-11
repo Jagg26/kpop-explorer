@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K-Pop Explorer | Search</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/search.js" type="module"></script>
+  </head>
+  <body>
+    <header id="main-header"></header>
+    <main>
+      <section class="content-section">
+        <div class="section-heading">
+          <p class="eyebrow">Find your next favorite</p>
+          <h1>Search Results</h1>
+        </div>
+        <form class="page-search" action="/search/" method="get">
+          <label for="search-query">Search artists</label>
+          <input
+            id="search-query"
+            name="query"
+            type="search"
+            placeholder="Search for a K-Pop artist"
+            required
+          />
+          <button type="submit">Search</button>
+        </form>
+        <p class="status-message" id="search-status"></p>
+        <ul class="artist-grid" id="search-results"></ul>
+      </section>
+    </main>
+    <footer id="main-footer"></footer>
+  </body>
+</html>

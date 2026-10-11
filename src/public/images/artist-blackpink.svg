@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#15151f"/>
+  <rect x="90" y="90" width="720" height="720" rx="36" fill="#ff4fa3" opacity=".18"/>
+  <circle cx="250" cy="280" r="130" fill="#ff4fa3"/>
+  <circle cx="650" cy="610" r="150" fill="#11131a"/>
+  <path d="M450 155l44 89 98 14-71 69 17 98-88-46-88 46 17-98-71-69 98-14z" fill="#ffffff"/>
+  <text x="450" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="92" font-weight="800" fill="#ffffff">BLACKPINK</text>
+  <text x="450" y="725" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#ffd7eb">K-POP EXPLORER</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img">
+  <rect width="900" height="900" fill="#15151f"/>
+  <circle cx="450" cy="390" r="250" fill="#8b5cf6" opacity=".75"/>
+  <circle cx="450" cy="390" r="160" fill="#ff4fa3" opacity=".85"/>
+  <path d="M450 150l46 93 103 15-75 73 18 103-92-48-92 48 18-103-75-73 103-15z" fill="#ffffff"/>
+  <text x="450" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="150" font-weight="800" fill="#ffffff">IVE</text>
+  <text x="450" y="725" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#e8dcff">K-POP EXPLORER</text>
+</svg>
