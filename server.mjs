@@ -122,6 +122,14 @@ function handleStaticFile(request, response) {
   let filePath = join(distDirectory, safePath);
 
   if (!existsSync(filePath)) {
+    if (extname(pathname)) {
+      response.writeHead(404, {
+        "Content-Type": "text/plain",
+      });
+      response.end("Asset not found.");
+      return;
+    }
+
     filePath = join(distDirectory, "index.html");
   }
 
