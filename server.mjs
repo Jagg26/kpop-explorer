@@ -156,6 +156,6 @@ createServer((request, response) => {
   }
 
   handleStaticFile(request, response);
-}).listen(port, () => {
+}).listen(port, "0.0.0.0", () => {
   console.log(`K-Pop Explorer server running on port ${port}`);
 });
