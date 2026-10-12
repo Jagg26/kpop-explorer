@@ -17,11 +17,18 @@ async function init() {
   compareArtists.renderOptions(secondSelect, artists, "blackpink");
   compareArtists.compare(firstSelect.value, secondSelect.value);
 
+  function updateComparison() {
+    compareArtists.compare(firstSelect.value, secondSelect.value);
+  }
+
+  firstSelect.addEventListener("change", updateComparison);
+  secondSelect.addEventListener("change", updateComparison);
+
   document
     .querySelector("#compare-form")
     .addEventListener("submit", (event) => {
       event.preventDefault();
-      compareArtists.compare(firstSelect.value, secondSelect.value);
+      updateComparison();
     });
 }
 

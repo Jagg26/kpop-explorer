@@ -22,6 +22,12 @@ async function init() {
   const resultsElement = document.querySelector("#search-results");
 
   searchInput.value = query;
+  searchInput.addEventListener("input", () => {
+    const currentQuery = searchInput.value.trim();
+    status.textContent = currentQuery
+      ? `Ready to search for "${currentQuery}".`
+      : "Enter an artist name to search.";
+  });
 
   if (!query) {
     status.textContent = "Enter an artist name to search.";
