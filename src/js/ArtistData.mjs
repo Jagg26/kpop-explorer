@@ -63,11 +63,14 @@ export default class ArtistData {
 
   async getFeaturedArtists() {
     try {
-      const spotifyIds = this.artists.map((artist) => artist.spotifyId);
-      const data = await this.spotifyFetch(`/artists?ids=${spotifyIds.join(",")}`);
-      return data.artists.map((artist, index) =>
-        normalizeSpotifyArtist(artist, this.artists[index]),
+      const artists = await Promise.all(
+        this.artists.map((artist) =>
+          this.spotifyFetch(`/artists/${artist.spotifyId}`).then(
+            (spotifyArtist) => normalizeSpotifyArtist(spotifyArtist, artist),
+          ),
+        ),
       );
+      return artists;
     } catch (error) {
       console.warn(error);
     }
