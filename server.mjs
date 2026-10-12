@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -65,8 +65,8 @@ async function getSpotifyToken() {
     return spotifyToken;
   }
 
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const clientId = process.env.SPOTIFY_CLIENT_ID?.trim();
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET?.trim();
 
   if (!clientId || !clientSecret) {
     throw new Error("Spotify credentials are not configured.");
@@ -116,40 +116,59 @@ async function handleSpotifyProxy(request, response) {
 }
 
 function handleStaticFile(request, response) {
-  const requestUrl = new URL(request.url, `http://${request.headers.host}`);
-  const pathname = requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
-  const safePath = normalize(pathname).replace(/^(\.\.[/\\])+/, "");
-  let filePath = join(distDirectory, safePath);
+  try {
+    const requestUrl = new URL(request.url, `http://${request.headers.host}`);
+    const pathname =
+      requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
+    const safePath = normalize(pathname).replace(/^(\.\.[/\\])+/, "");
+    let filePath = join(distDirectory, safePath);
 
-  if (!existsSync(filePath)) {
-    if (extname(pathname)) {
+    if (existsSync(filePath) && statSync(filePath).isDirectory()) {
+      filePath = join(filePath, "index.html");
+    }
+
+    if (!existsSync(filePath)) {
+      if (extname(pathname)) {
+        response.writeHead(404, {
+          "Content-Type": "text/plain",
+        });
+        response.end("Asset not found.");
+        return;
+      }
+
+      filePath = join(distDirectory, "index.html");
+    }
+
+    if (!existsSync(filePath)) {
       response.writeHead(404, {
         "Content-Type": "text/plain",
       });
-      response.end("Asset not found.");
+      response.end("Build output not found. Run npm run build first.");
       return;
     }
 
-    filePath = join(distDirectory, "index.html");
-  }
-
-  if (!existsSync(filePath)) {
-    response.writeHead(404, {
+    response.writeHead(200, {
+      "Content-Type": getContentType(filePath),
+    });
+    response.end(readFileSync(filePath));
+  } catch (error) {
+    response.writeHead(500, {
       "Content-Type": "text/plain",
     });
-    response.end("Build output not found. Run npm run build first.");
-    return;
+    response.end(`Server error: ${error.message}`);
   }
-
-  response.writeHead(200, {
-    "Content-Type": getContentType(filePath),
-  });
-  response.end(readFileSync(filePath));
 }
 
 loadLocalEnv();
 
 createServer((request, response) => {
+  if (request.url === "/api/health") {
+    sendJson(response, 200, {
+      ok: true,
+    });
+    return;
+  }
+
   if (request.url.startsWith("/api/spotify/")) {
     handleSpotifyProxy(request, response);
     return;
