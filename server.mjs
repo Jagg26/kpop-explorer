@@ -97,9 +97,22 @@ async function handleSpotifyProxy(request, response) {
   try {
     const requestUrl = new URL(request.url, `http://${request.headers.host}`);
     const spotifyPath = requestUrl.pathname.replace("/api/spotify", "");
+    const spotifySearchParams = new URLSearchParams(requestUrl.search);
+
+    if (spotifyPath === "/search") {
+      const requestedLimit = Number(spotifySearchParams.get("limit"));
+
+      if (requestedLimit > 10) {
+        spotifySearchParams.set("limit", "10");
+      }
+    }
+
+    const spotifyQuery = spotifySearchParams.toString()
+      ? `?${spotifySearchParams.toString()}`
+      : "";
     const token = await getSpotifyToken();
     const spotifyResponse = await fetch(
-      `https://api.spotify.com/v1${spotifyPath}${requestUrl.search}`,
+      `https://api.spotify.com/v1${spotifyPath}${spotifyQuery}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

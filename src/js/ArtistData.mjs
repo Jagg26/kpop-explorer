@@ -83,7 +83,7 @@ export default class ArtistData {
 
     try {
       const data = await this.spotifyFetch(
-        `/search?type=artist&limit=12&q=${encodeURIComponent(query)}`,
+        `/search?type=artist&limit=10&q=${encodeURIComponent(query)}`,
       );
       return data.artists.items
         .map(normalizeSpotifyArtist)
