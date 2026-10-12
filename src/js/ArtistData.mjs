@@ -1,7 +1,6 @@
 import { convertToJson } from "./utils.mjs";
 import { fallbackArtists, fallbackVideos } from "./kpopData.mjs";
 
-const spotifyToken = import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN;
 const youtubeApiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
 
 function normalizeSpotifyArtist(artist, fallbackArtist = null) {
@@ -58,28 +57,19 @@ export default class ArtistData {
   }
 
   async spotifyFetch(path) {
-    if (!spotifyToken) {
-      throw new Error("Spotify token is not configured.");
-    }
-    const response = await fetch(`https://api.spotify.com/v1${path}`, {
-      headers: {
-        Authorization: `Bearer ${spotifyToken}`,
-      },
-    });
+    const response = await fetch(`/api/spotify${path}`);
     return convertToJson(response);
   }
 
   async getFeaturedArtists() {
-    if (spotifyToken) {
-      try {
-        const spotifyIds = this.artists.map((artist) => artist.spotifyId);
-        const data = await this.spotifyFetch(`/artists?ids=${spotifyIds.join(",")}`);
-        return data.artists.map((artist, index) =>
-          normalizeSpotifyArtist(artist, this.artists[index]),
-        );
-      } catch (error) {
-        console.warn(error);
-      }
+    try {
+      const spotifyIds = this.artists.map((artist) => artist.spotifyId);
+      const data = await this.spotifyFetch(`/artists?ids=${spotifyIds.join(",")}`);
+      return data.artists.map((artist, index) =>
+        normalizeSpotifyArtist(artist, this.artists[index]),
+      );
+    } catch (error) {
+      console.warn(error);
     }
 
     return this.artists;
@@ -91,17 +81,19 @@ export default class ArtistData {
       return [];
     }
 
-    if (spotifyToken) {
-      try {
-        const data = await this.spotifyFetch(
-          `/search?type=artist&limit=12&q=${encodeURIComponent(query)}`,
+    try {
+      const data = await this.spotifyFetch(
+        `/search?type=artist&limit=12&q=${encodeURIComponent(query)}`,
+      );
+      return data.artists.items
+        .map(normalizeSpotifyArtist)
+        .filter(
+          (artist) =>
+            artist.genres.join(" ").toLowerCase().includes("k-pop") ||
+            artist.name.toLowerCase().includes(searchTerm),
         );
-        return data.artists.items
-          .map(normalizeSpotifyArtist)
-          .filter((artist) => artist.genres.join(" ").toLowerCase().includes("k-pop") || artist.name.toLowerCase().includes(searchTerm));
-      } catch (error) {
-        console.warn(error);
-      }
+    } catch (error) {
+      console.warn(error);
     }
 
     return this.artists.filter((artist) => {
@@ -117,21 +109,19 @@ export default class ArtistData {
 
     const spotifyId = fallbackArtist?.spotifyId || id;
 
-    if (spotifyToken) {
-      try {
-        const artist = normalizeSpotifyArtist(
-          await this.spotifyFetch(`/artists/${spotifyId}`),
-          fallbackArtist,
-        );
-        const [topTracks, albums, videos] = await Promise.all([
-          this.getTopTracks(spotifyId).catch(() => artist.topTracks),
-          this.getAlbums(spotifyId).catch(() => artist.albums),
-          this.getArtistVideos(artist.name, fallbackArtist?.id || spotifyId),
-        ]);
-        return { ...artist, topTracks, albums, videos };
-      } catch (error) {
-        console.warn(error);
-      }
+    try {
+      const artist = normalizeSpotifyArtist(
+        await this.spotifyFetch(`/artists/${spotifyId}`),
+        fallbackArtist,
+      );
+      const [topTracks, albums, videos] = await Promise.all([
+        this.getTopTracks(spotifyId).catch(() => artist.topTracks),
+        this.getAlbums(spotifyId).catch(() => artist.albums),
+        this.getArtistVideos(artist.name, fallbackArtist?.id || spotifyId),
+      ]);
+      return { ...artist, topTracks, albums, videos };
+    } catch (error) {
+      console.warn(error);
     }
 
     if (!fallbackArtist) {
@@ -145,9 +135,6 @@ export default class ArtistData {
   }
 
   async getTopTracks(spotifyId) {
-    if (!spotifyToken) {
-      return [];
-    }
     const data = await this.spotifyFetch(
       `/artists/${spotifyId}/top-tracks?market=US`,
     );
@@ -155,9 +142,6 @@ export default class ArtistData {
   }
 
   async getAlbums(spotifyId) {
-    if (!spotifyToken) {
-      return [];
-    }
     const data = await this.spotifyFetch(
       `/artists/${spotifyId}/albums?include_groups=album,single&market=US&limit=8`,
     );

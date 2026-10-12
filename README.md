@@ -16,14 +16,14 @@ and favorite artists saved in the browser.
 
 ```bash
 npm ci
-npm run start
+npm run dev
 ```
 
 ## API Configuration
 
-The app works with local fallback data by default. To load live Spotify artist
-images, albums, and tracks, create a `.env` file using `.env.example` as a guide
-and add a valid Spotify access token.
+The app works with local fallback data by default. To load live Spotify data,
+create a `.env` file using `.env.example` as a guide and add your Spotify
+client credentials.
 
 You can also add a YouTube Data API key to load live video search results.
 
@@ -31,4 +31,11 @@ You can also add a YouTube Data API key to load live video search results.
 
 ```bash
 npm run build
+```
+
+## Production Server
+
+```bash
+npm run build
+npm run start
 ```
